@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy to Clipboard</title>
+  <style>
+    .copy-area{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      border:1px solid #ccc;
+      background-color: white;
+      border:10px ;
+      padding: 20px;
+  }
+  .copy-area textarea{
+      box-sizing: border-box;
+      background-color: white;
+      height: 200px;
+      resize: none;
+      border:  2px solid #1453f1;
+      border-radius: 20px;
+      outline: none;
+      padding: 10px;
+      font-size: 16px;
+  }
+
+  .copy-area button{
+      position: absolute;
+      padding: 5px 10px;
+      font-size: 15px;
+      color: #5784f5;
+      right: 10px;
+      top: 10px;
+      border: 1px solid #5784f5;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color:#fff;
+  }
+
+  .copy-area button:active{
+      background-color: #1453f1;
+      color: #fff;
+  }
+  .copy-area button::before{
+      content:"Copied";
+      font-size: 15px;
+      display: none;
+  }
+  .copy-area.active button::before{
+      display:block;
+  }
+  </style>
+  <script>
+    function copy(){
+      let copyArea = document.querySelector(".copy-area");
+      let text = document.getElementById("myArea");
+      text.select();
+      document.execCommand("copy");
+      document.getElementById("copy-btn").style.display="none";
+      copyArea.classList.add("active");
+      window.getSelection().removeAllRanges();
+      setTimeout(() => {
+        document.getElementById("copy-btn").style.display="block";
+        copyArea.classList.remove("active");    
+      },2500);
+}
+  </script>
+</head>
+<body>
+ <div class="copy-area">
+  <textarea id="myArea" cols="30" rows="10" placeholder="Enter the text to copy"></textarea>
+  <button onclick="copy()">
+    <span id="copy-btn">Copy</span>
+  </button>
+ </div>
+</body>
+</html>
